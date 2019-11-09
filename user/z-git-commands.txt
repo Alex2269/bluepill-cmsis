@@ -1,0 +1,30 @@
+
+   git clone git@github.com:Alex2269/bluepill-cmsis.git
+   #******************************************
+   # echo "# bluepill-cmsis" >> README.md
+   git init
+   git status
+   git add .
+   git commit -m "$(date "+%Y-%m-%d")"
+   git remote add origin git@github.com:Alex2269/bluepill-cmsis.git
+   git push -u origin master
+   git pull
+   #******************************************
+
+   #******************************************
+   git status
+   git add .
+   git commit -m "$(date "+%Y-%m-%d")"
+   git push -u origin master
+   git pull
+   #******************************************
+
+   #******************************************
+   git add . # add all files
+   git add README.md # add one file
+   git add blink/git-commands.txt
+   #******************************************
+   git checkout -b pid-new
+   git branch
+   git checkout master
+   #******************************************

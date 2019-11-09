@@ -1,0 +1,17 @@
+#!/bin/sh
+
+DIRS=$(pwd)/${1}
+
+replace() {
+  cd "$DIRS"
+  sed -i '/USERDIR/s/\ user/\ \.\.\/user/' "${1}"
+}
+
+echo "$DIRS" | while read d ; do
+  if test -n "$d" -a -d "$d"; then
+    find "$d" -name 'Makefile' | while read SRC; do
+      replace "$SRC"
+    done
+  fi
+done
+
