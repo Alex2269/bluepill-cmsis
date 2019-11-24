@@ -4,8 +4,7 @@
 # mkdir  -p "${StdPeriph_Lib}"
 
 # sfm32f1 Libraries
-# wget http://www.st.com/content/ccc/resource/technical/software/firmware/48/ab/e5/17/0d/79/43/74/stsw-stm32054.zip/files/stsw-stm32054.zip/jcr:content/translations/en.stsw-stm32054.zip -O stm32f1_stdperiph_lib.zip
-# unzip  stm32f1_stdperiph_lib.zip -d "${StdPeriph_Lib}"
+# unzip  zip-stm32f1_stdperiph_lib/stm32f1_stdperiph_lib.zip -d "${StdPeriph_Lib}"
 
 # rm stm32f1_stdperiph_lib.zip
 
