@@ -1,4 +1,6 @@
-STD_PERIPH_LIBS ?= $(HOME)/stm32lib/STM32F10x_StdPeriph_Lib_V3.5.0
+DIR_StdPeriph ?= $(HOME)/stm32lib
+STD_PERIPH_LIBS ?= $(DIR_StdPeriph)/STM32F10x_StdPeriph_Lib_V3.5.0
+GCC_PATH ?= 
 
 # name for output binary files
 PROJECT ?= PWR_Sleep
@@ -39,10 +41,18 @@ SOURCES += $(USERDIR)/syscalls.c
 SOURCES += $(STD_PERIPH_LIBS)/Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x/system_stm32f10x.c
 SOURCES += $(STD_PERIPH_LIBS)/Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x/startup/TrueSTUDIO/startup_stm32f10x_md.s
 
-# compiler, objcopy (should be in PATH)
-CC = arm-none-eabi-gcc
-OBJCOPY = arm-none-eabi-objcopy
-SIZE = arm-none-eabi-size
+# compiler, objcopy (should be in GCC_PATH)
+PREFIX = arm-none-eabi-
+ifdef GCC_PATH
+CC = $(GCC_PATH)/$(PREFIX)gcc
+CP = $(GCC_PATH)/$(PREFIX)objcopy
+SZ = $(GCC_PATH)/$(PREFIX)size
+else
+CC = $(PREFIX)gcc
+CP = $(PREFIX)objcopy
+SZ = $(PREFIX)size
+endif
+
 # path to st-flash (or should be specified in PATH)
 ST_FLASH ?= st-flash
 
@@ -66,11 +76,11 @@ all: $(PROJECT).elf
 # compile
 $(PROJECT).elf: $(SOURCES)
 	$(CC) $(CFLAGS) $^ -o $@
-	$(OBJCOPY) -O ihex $(PROJECT).elf   $(PROJECT).hex
-	$(OBJCOPY) -O binary $(PROJECT).elf $(PROJECT).bin 
+	$(CP) -O ihex $(PROJECT).elf   $(PROJECT).hex
+	$(CP) -O binary $(PROJECT).elf $(PROJECT).bin 
 	@echo $(PROJECT).bin "file size is (kB) :" 
 	@stat -L -c %s $(PROJECT).bin
-	@$(SIZE) $(PROJECT).elf
+	@$(SZ) $(PROJECT).elf
 
 # remove binary files
 clean:
