@@ -1,5 +1,5 @@
 ```    
-bluepill-cmsis
+bluepill-cmsis:
 
 StdPeriph_Lib=${HOME}/stm32lib/
 mkdir  -p "${StdPeriph_Lib}"
