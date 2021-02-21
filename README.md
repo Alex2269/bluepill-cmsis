@@ -1,5 +1,7 @@
 ```    
 bluepill-cmsis:
+example SPL (Standard Peripheral Library).
+
 
 StdPeriph_Lib=${HOME}/stm32lib/
 mkdir  -p "${StdPeriph_Lib}"
