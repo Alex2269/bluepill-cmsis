@@ -3,38 +3,15 @@ STD_PERIPH_LIBS ?= $(DIR_StdPeriph)/STM32F10x_StdPeriph_Lib_V3.5.0
 GCC_PATH ?= 
 
 # name for output binary files
-PROJECT ?= StepMotor
+PROJECT ?= application
 
+SRCDIR = sources
 USERDIR = ../user
 # list of source files
-SOURCES  = main.c
+SOURCES += $(shell find $(SRCDIR) -name '*.c')
+SOURCES += $(shell find $(USERDIR) -name '*.c')
+SOURCES += $(shell find $(STD_PERIPH_LIBS)/Libraries/STM32F10x_StdPeriph_Driver/src -name '*.c')
 
-SOURCES += $(STD_PERIPH_LIBS)/Libraries/STM32F10x_StdPeriph_Driver/src/misc.c
-SOURCES += $(STD_PERIPH_LIBS)/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_adc.c
-SOURCES += $(STD_PERIPH_LIBS)/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_bkp.c
-SOURCES += $(STD_PERIPH_LIBS)/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_can.c
-SOURCES += $(STD_PERIPH_LIBS)/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_cec.c
-SOURCES += $(STD_PERIPH_LIBS)/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_crc.c
-SOURCES += $(STD_PERIPH_LIBS)/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dac.c
-SOURCES += $(STD_PERIPH_LIBS)/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dbgmcu.c
-SOURCES += $(STD_PERIPH_LIBS)/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.c
-SOURCES += $(STD_PERIPH_LIBS)/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_exti.c
-SOURCES += $(STD_PERIPH_LIBS)/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_flash.c
-SOURCES += $(STD_PERIPH_LIBS)/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_fsmc.c
-SOURCES += $(STD_PERIPH_LIBS)/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_gpio.c
-SOURCES += $(STD_PERIPH_LIBS)/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_i2c.c
-SOURCES += $(STD_PERIPH_LIBS)/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_iwdg.c
-SOURCES += $(STD_PERIPH_LIBS)/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_pwr.c
-SOURCES += $(STD_PERIPH_LIBS)/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_rcc.c
-SOURCES += $(STD_PERIPH_LIBS)/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_rtc.c
-SOURCES += $(STD_PERIPH_LIBS)/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_sdio.c
-SOURCES += $(STD_PERIPH_LIBS)/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_spi.c
-SOURCES += $(STD_PERIPH_LIBS)/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_tim.c
-SOURCES += $(STD_PERIPH_LIBS)/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_usart.c
-SOURCES += $(STD_PERIPH_LIBS)/Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_wwdg.c
-
-SOURCES += $(USERDIR)/delay.c
-SOURCES += $(USERDIR)/syscalls.c
 
 SOURCES += $(STD_PERIPH_LIBS)/Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x/system_stm32f10x.c
 SOURCES += $(STD_PERIPH_LIBS)/Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x/startup/TrueSTUDIO/startup_stm32f10x_md.s
@@ -61,11 +38,11 @@ CFLAGS += -mlittle-endian -mthumb -mcpu=cortex-m3 -mthumb-interwork --specs=rdim
 CFLAGS += -mfloat-abi=soft  -lgcc -lc -lm 
 CFLAGS += -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER -MD
 CFLAGS += -Wl,-Map=$(PROJECT).map,--gc-sections
-CFLAGS += -I.
-CFLAGS += -I$(USERDIR)
-CFLAGS += -I$(STD_PERIPH_LIBS)/Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x
-CFLAGS += -I$(STD_PERIPH_LIBS)/Libraries/CMSIS/CM3/CoreSupport
-CFLAGS += -I$(STD_PERIPH_LIBS)/Libraries/STM32F10x_StdPeriph_Driver/inc
+CFLAGS += -I $(SRCDIR)
+CFLAGS += -I $(USERDIR)
+CFLAGS += -I $(STD_PERIPH_LIBS)/Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x
+CFLAGS += -I $(STD_PERIPH_LIBS)/Libraries/CMSIS/CM3/CoreSupport
+CFLAGS += -I $(STD_PERIPH_LIBS)/Libraries/STM32F10x_StdPeriph_Driver/inc
 
 OBJS = $(SOURCES:.c=.o)
 

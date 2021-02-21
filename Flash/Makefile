@@ -3,16 +3,15 @@ STD_PERIPH_LIBS ?= $(DIR_StdPeriph)/STM32F10x_StdPeriph_Lib_V3.5.0
 GCC_PATH ?= 
 
 # name for output binary files
-PROJECT ?= Flash
+PROJECT ?= application
 
+SRCDIR = sources
 USERDIR = ../user
 # list of source files
-SOURCES  = main.c
-
+SOURCES += $(shell find $(SRCDIR) -name '*.c')
+SOURCES += $(shell find $(USERDIR) -name '*.c')
 SOURCES += $(shell find $(STD_PERIPH_LIBS)/Libraries/STM32F10x_StdPeriph_Driver/src -name '*.c')
 
-SOURCES += $(USERDIR)/delay.c
-SOURCES += $(USERDIR)/syscalls.c
 
 SOURCES += $(STD_PERIPH_LIBS)/Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x/system_stm32f10x.c
 SOURCES += $(STD_PERIPH_LIBS)/Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x/startup/TrueSTUDIO/startup_stm32f10x_md.s
@@ -39,11 +38,11 @@ CFLAGS += -mlittle-endian -mthumb -mcpu=cortex-m3 -mthumb-interwork --specs=rdim
 CFLAGS += -mfloat-abi=soft  -lgcc -lc -lm 
 CFLAGS += -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER -MD
 CFLAGS += -Wl,-Map=$(PROJECT).map,--gc-sections
-CFLAGS += -I.
-CFLAGS += -I$(USERDIR)
-CFLAGS += -I$(STD_PERIPH_LIBS)/Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x
-CFLAGS += -I$(STD_PERIPH_LIBS)/Libraries/CMSIS/CM3/CoreSupport
-CFLAGS += -I$(STD_PERIPH_LIBS)/Libraries/STM32F10x_StdPeriph_Driver/inc
+CFLAGS += -I $(SRCDIR)
+CFLAGS += -I $(USERDIR)
+CFLAGS += -I $(STD_PERIPH_LIBS)/Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x
+CFLAGS += -I $(STD_PERIPH_LIBS)/Libraries/CMSIS/CM3/CoreSupport
+CFLAGS += -I $(STD_PERIPH_LIBS)/Libraries/STM32F10x_StdPeriph_Driver/inc
 
 OBJS = $(SOURCES:.c=.o)
 

@@ -3,16 +3,15 @@ STD_PERIPH_LIBS ?= $(DIR_StdPeriph)/STM32F10x_StdPeriph_Lib_V3.5.0
 GCC_PATH ?= 
 
 # name for output binary files
-PROJECT ?= First_Programm
+PROJECT ?= application
 
 SRCDIR = sources
 USERDIR = ../user
 # list of source files
 SOURCES += $(shell find $(SRCDIR) -name '*.c')
+SOURCES += $(shell find $(USERDIR) -name '*.c')
 SOURCES += $(shell find $(STD_PERIPH_LIBS)/Libraries/STM32F10x_StdPeriph_Driver/src -name '*.c')
 
-SOURCES += $(USERDIR)/delay.c
-SOURCES += $(USERDIR)/syscalls.c
 
 SOURCES += $(STD_PERIPH_LIBS)/Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x/system_stm32f10x.c
 SOURCES += $(STD_PERIPH_LIBS)/Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x/startup/TrueSTUDIO/startup_stm32f10x_md.s
