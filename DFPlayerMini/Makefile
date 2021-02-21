@@ -33,13 +33,16 @@ endif
 # path to st-flash (or should be specified in PATH)
 ST_FLASH ?= st-flash
 
+MEMUSE = -Wl,--print-memory-usage,-Map=$(PROJECT).map
 # specify compiler flags
 CFLAGS  = -O2 -g -Wall -Wno-unused-variable
 CFLAGS += -T$(STD_PERIPH_LIBS)/Project/STM32F10x_StdPeriph_Template/TrueSTUDIO/STM3210B-EVAL/stm32_flash.ld
 CFLAGS += -mlittle-endian -mthumb -mcpu=cortex-m3 -mthumb-interwork --specs=rdimon.specs  -specs=nano.specs   
 CFLAGS += -mfloat-abi=soft  -lgcc -lc -lm 
 CFLAGS += -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER -MD
-CFLAGS += -Wl,-Map=$(PROJECT).map,--gc-sections
+CFLAGS += $(MEMUSE)
+CFLAGS += -Wl,--check-sections
+CFLAGS += -Wl,--gc-sections
 CFLAGS += -I $(SRCDIR)
 CFLAGS += -I $(SDDIR)
 CFLAGS += -I $(USERDIR)
