@@ -1,6 +1,6 @@
 ```    
 bluepill-cmsis:
-example SPL (Standard Peripheral Library).
+examples SPL (Standard Peripheral Library).
 
 
 StdPeriph_Lib=${HOME}/stm32lib/
